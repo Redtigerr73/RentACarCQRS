@@ -11,7 +11,7 @@ namespace Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<Booking> Bookings { get; set; }
+        DbSet<BookingEntity> Bookings { get; set; }
         DbSet<CarEntity> Cars { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);

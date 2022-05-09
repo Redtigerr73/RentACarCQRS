@@ -11,7 +11,7 @@ namespace Application.Booking.Queries.GetBookings
     public  class BookingDto: IMapFrom<BookingEntity>
     {
         public DateTime? Date { get; set; }     
-        public string Note { get; set; }
+        public string Name { get; set; }
         public CarEntity Car { get; set; }
     }
 }

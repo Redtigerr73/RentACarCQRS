@@ -15,6 +15,10 @@ namespace Domain.Entities
 
         public bool IsPayed { get; set; }
 
+        public string Name { get; set; }    
+
+        public int Id { get; set; }
+
 
     }
 }

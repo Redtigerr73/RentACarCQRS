@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Booking\Commands\" />
     <Folder Include="Car\Commands\" />
     <Folder Include="Car\Queries\" />
   </ItemGroup>
