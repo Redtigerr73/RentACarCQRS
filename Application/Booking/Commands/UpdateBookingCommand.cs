@@ -45,5 +45,5 @@ namespace Application.Booking.Commands
                 return Unit.Value;
             }
         }
-    }
 }
+
