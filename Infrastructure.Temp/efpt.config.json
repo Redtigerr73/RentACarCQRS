@@ -1,0 +1,71 @@
+﻿{
+  "CodeGenerationMode": 0,
+  "ContextClassName": "RentACarDbContext",
+  "ContextNamespace": "Persistence",
+  "DefaultDacpacSchema": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": false,
+  "ModelNamespace": "Entities",
+  "OutputContextPath": "Persistence",
+  "OutputPath": "Entities",
+  "ProjectRootNamespace": "Domain",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "[dbo].[Booking]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Car]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Category]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Country]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Customer]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Invoice]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Location]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Package]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[TransferFee]",
+      "ObjectType": 0
+    }
+  ],
+  "UiHint": "DESKTOP-3C2FPNA.RentACar",
+  "UseBoolPropertiesWithoutDefaultSql": false,
+  "UseDatabaseNames": false,
+  "UseDbContextSplitting": true,
+  "UseFluentApiOnly": true,
+  "UseHandleBars": false,
+  "UseHierarchyId": false,
+  "UseInflector": true,
+  "UseLegacyPluralizer": false,
+  "UseManyToManyEntity": false,
+  "UseNoConstructor": false,
+  "UseNoDefaultConstructor": false,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": false,
+  "UseSchemaFolders": false,
+  "UseSpatial": false
+}

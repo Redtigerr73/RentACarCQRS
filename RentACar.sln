@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{9B7CC163-3F0A-4922-A33C-5BBF4483C610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{9B7CC163-3F0A-4922-A33C-5BBF4483C610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{CA047695-E7A4-4073-9D45-B20224892682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{CA047695-E7A4-4073-9D45-B20224892682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{E1B8135F-81E6-4173-93D4-80B732D19873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{E1B8135F-81E6-4173-93D4-80B732D19873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarApi", "RentACarApi\RentACarApi.csproj", "{AFCDCB8E-5769-44A3-9376-6526D775C5B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarApi", "RentACarApi\RentACarApi.csproj", "{AFCDCB8E-5769-44A3-9376-6526D775C5B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.MVC", "WebUI.MVC\WebUI.MVC.csproj", "{1E62F713-16C2-447C-BA4D-2B39C6E3A5BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Temp", "Infrastructure.Temp\Infrastructure.Temp.csproj", "{CFE6EB05-AD5B-4AB2-9521-7B910BAF2CE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{AFCDCB8E-5769-44A3-9376-6526D775C5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFCDCB8E-5769-44A3-9376-6526D775C5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCDCB8E-5769-44A3-9376-6526D775C5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E62F713-16C2-447C-BA4D-2B39C6E3A5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E62F713-16C2-447C-BA4D-2B39C6E3A5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E62F713-16C2-447C-BA4D-2B39C6E3A5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E62F713-16C2-447C-BA4D-2B39C6E3A5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFE6EB05-AD5B-4AB2-9521-7B910BAF2CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE6EB05-AD5B-4AB2-9521-7B910BAF2CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE6EB05-AD5B-4AB2-9521-7B910BAF2CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE6EB05-AD5B-4AB2-9521-7B910BAF2CE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

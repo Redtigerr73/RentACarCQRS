@@ -1,14 +1,8 @@
-﻿
-using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure
 {
@@ -16,14 +10,16 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext> (options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            var cs = configuration["ConnectionStrings:DefaultConnection"];
+
+            services.AddDbContext<RentACarDbContext>(options =>
+           options.UseSqlServer(
+               configuration.GetConnectionString("DefaultConnection"),
+               b => b.MigrationsAssembly(typeof(RentACarDbContext).Assembly.FullName)));
+
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<RentACarDbContext>());
             return services;
         }
-
     }
 }

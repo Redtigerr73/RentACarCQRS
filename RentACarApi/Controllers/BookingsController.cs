@@ -1,6 +1,5 @@
-﻿using Application.Booking.Commands;
-using Application.Booking.Queries.GetBookings;
-using Microsoft.AspNetCore.Http;
+﻿using Application.Bookings.Commands;
+using Application.Bookings.Queries.GetBookings;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

@@ -1,9 +1,10 @@
-﻿using Application.CustomErrors;
+﻿using Application.Common.CustomErrors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RentACarApi.Filters
 {
@@ -16,7 +17,7 @@ namespace RentACarApi.Filters
             // Register known exception types and handlers.
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
-                { typeof(ValidationException), HandleValidationException },
+                { typeof(Application.Common.CustomErrors.ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
             };
         }
@@ -64,7 +65,7 @@ namespace RentACarApi.Filters
 
         private void HandleValidationException(ExceptionContext context)
         {
-            var exception = context.Exception as ValidationException;
+            var exception = context.Exception as Application.Common.CustomErrors.ValidationException;
 
             var details = new ValidationProblemDetails(exception.Errors)
             {
@@ -105,4 +106,3 @@ namespace RentACarApi.Filters
         }
     }
 }
-
