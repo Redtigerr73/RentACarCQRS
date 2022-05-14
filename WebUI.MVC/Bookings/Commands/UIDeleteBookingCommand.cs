@@ -5,27 +5,23 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Bookings.Commands
+namespace Application.Features.Bookings.Commands
 {
-    public class UpdateBookingCommand : IRequest
+    public class UIDeleteBookingCommand : IRequest
     {
         public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public bool IsPayed { get; set; }
     }
 
-    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateBookingCommand>
+    public class DeleteBookingCommandHandler : IRequestHandler<UIDeleteBookingCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public UpdateTodoItemCommandHandler(IApplicationDbContext context)
+        public DeleteBookingCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateBookingCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UIDeleteBookingCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Bookings.FindAsync(request.Id);
 
@@ -34,8 +30,7 @@ namespace Application.Bookings.Commands
                 throw new NotFoundException(nameof(Booking), request.Id);
             }
 
-            //entity.Name = request.Name;
-            //entity.IsPayed = request.IsPayed;
+            _context.Bookings.Remove(entity);
 
             await _context.SaveChangesAsync(cancellationToken);
 

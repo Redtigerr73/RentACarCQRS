@@ -3,11 +3,11 @@ using FluentValidation;
 
 namespace Application.Features.Bookings.Commands
 {
-    public class CreateBookingCommandValidator : AbstractValidator<CreateBookingCommand>
+    public class UICreateBookingCommandValidator : AbstractValidator<UICreateBookingCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public CreateBookingCommandValidator(IApplicationDbContext context)
+        public UICreateBookingCommandValidator(IApplicationDbContext context)
         {
             _context = context;
             RuleFor(n => n.Name)

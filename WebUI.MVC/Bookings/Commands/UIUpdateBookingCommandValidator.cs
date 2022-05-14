@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.Features.Bookings.Commands
 {
-    public class UpdateBookingCommandValidator : AbstractValidator<UpdateBookingCommand>
+    public class UIUpdateBookingCommandValidator : AbstractValidator<UIUpdateBookingCommand>
     {
-        public UpdateBookingCommandValidator()
+        public UIUpdateBookingCommandValidator()
         {
             RuleFor(v => v.Name)
                 .MaximumLength(200)

@@ -2,8 +2,8 @@
 
 namespace Application.Bookings.Queries.GetBookings
 {
-    public class BookingsVm
+    public class UIBookingsVm
     {
-        public IList<BookingDto> Bookings { get; set; }
+        public IList<UIBookingDto> Bookings { get; set; }
     }
 }

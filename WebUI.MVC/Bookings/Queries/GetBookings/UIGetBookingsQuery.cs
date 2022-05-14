@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Application.Bookings.Queries.GetBookings
 {
-    public class GetBookingsQuery : IRequest<BookingsVm>
+    public class UIGetBookingsQuery : IRequest<UIBookingsVm>
     { }
 
-    public class GetbookingsQueryHandler : IRequestHandler<GetBookingsQuery, BookingsVm>
+    public class GetbookingsQueryHandler : IRequestHandler<UIGetBookingsQuery, UIBookingsVm>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -23,12 +23,12 @@ namespace Application.Bookings.Queries.GetBookings
             _mapper = mapper;
         }
 
-        public async Task<BookingsVm> Handle(GetBookingsQuery request, CancellationToken cancellationToken)
+        public async Task<UIBookingsVm> Handle(UIGetBookingsQuery request, CancellationToken cancellationToken)
         {
-            return new BookingsVm
+            return new UIBookingsVm
             {
                 Bookings = await _context.Bookings
-                .ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<UIBookingDto>(_mapper.ConfigurationProvider)
                 .OrderBy(t => t.Name)
                 .ToListAsync(cancellationToken)
             };

@@ -9,13 +9,15 @@ namespace Application.Bookings.Commands
 {
     public class CreateBookingCommand : IRequest<int>
     {
-        public int Id { get; set; }
         public DateTime FromDateTime { get; set; }
         public DateTime ReturnDateTime { get; set; }
-        public String status { get; set; }
-        public float amount { get; private set; }
-
-
+        public int CarId { get; set; }
+        public int CustomerId { get; set; }
+        public int PickUpLocationId { get; set; }
+        public int DropOffLocationId { get; set; }
+        public int PackageId { get; set; }
+        
+        
 
     }
 
@@ -31,16 +33,20 @@ namespace Application.Bookings.Commands
         public async Task<int> Handle(CreateBookingCommand command, CancellationToken cancellationToken)
         {
             var entity = new Booking
+
             {
-                FromDateTime = DateTime.Today /*"2022-04-20T00:00:00"*/,
-                ReturnDateTime= DateTime.Today,
-                Status= "Cancelled",
-                Amount= 569.5,
-                CustomerId= 61,
-                CarId = 26,
+                FromDateTime = DateTime.Today,
+                ReturnDateTime = DateTime.Today,
+                // TODO: remove and use enumeration
+                Status = "Cancelled",
+                // TODO: removed and calculate based on package + car + ...
+                Amount = 569.5,
+                CustomerId = command.CustomerId,
+                CarId = command.CarId,
                 InvoiceId = null,
-                PickUpLocationId = 1,
-                DropOffLocationId = 1
+                PickUpLocationId = command.PickUpLocationId,
+                DropOffLocationId = command.DropOffLocationId,
+                PackageId = command.PackageId
             };
 
             _context.Bookings.Add(entity);

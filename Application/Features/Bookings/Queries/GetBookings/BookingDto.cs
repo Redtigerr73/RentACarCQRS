@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Entities;
 using System;
 
+
 namespace Application.Bookings.Queries.GetBookings
 {
     public class BookingDto : IMapFrom<Booking>
@@ -12,6 +13,7 @@ namespace Application.Bookings.Queries.GetBookings
             profile.CreateMap<Booking, BookingDto>();
         }
 
+        public int Id { get; set; }
         public DateTime FromDateTime { get; set; }
         public DateTime ReturnDateTime { get; set; }
         public string Status { get; set; }
@@ -19,11 +21,23 @@ namespace Application.Bookings.Queries.GetBookings
         public int CustomerId { get; set; }
         public int CarId { get; set; }
         public int? InvoiceId { get; set; }
-        //public virtual Car Car { get; set; }
-        //public virtual Customer Customer { get; set; }
-        //public virtual Location DropOffLocation { get; set; }
-        //public virtual Invoice Invoice { get; set; }
-        //public virtual Package Package { get; set; }
-        ////public virtual Location PickUpLocation { get; set; }
+
+        public int? PackageId { get; set; }
+
+        /// 
+        /// Ignored properties from Deserialization
+        /// 
+        /*[JsonIgnore]
+        public virtual Car Car { get; set; }
+        [JsonIgnore]
+        public virtual Customer Customer { get; set; }
+        [JsonIgnore]
+        public virtual Location DropOffLocation { get; set; }
+        [JsonIgnore]
+        public virtual Invoice Invoice { get; set; }
+        [JsonIgnore]
+        public virtual Package Package { get; set; }
+        [JsonIgnore]
+        public virtual Location PickUpLocation { get; set; }*/
     }
 }

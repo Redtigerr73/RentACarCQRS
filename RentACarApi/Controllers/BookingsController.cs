@@ -15,6 +15,7 @@ namespace RentACarApi.Controllers
             return await Mediator.Send(new GetBookingsQuery());
         }
 
+        [Route("/api/bookings/create")]
         [HttpPost]
         public async Task<ActionResult<int>> Create(CreateBookingCommand command)
         {
