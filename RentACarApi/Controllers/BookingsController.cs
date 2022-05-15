@@ -1,5 +1,6 @@
 ﻿using Application.Bookings.Commands;
 using Application.Bookings.Queries.GetBookings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -17,7 +18,8 @@ namespace RentACarApi.Controllers
 
         [Route("/api/bookings/create")]
         [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateBookingCommand command)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<BookingDto>> Create(CreateBookingCommand command)
         {
             return await Mediator.Send(command);
         }
