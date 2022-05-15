@@ -36,9 +36,6 @@ namespace RentACarApi
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ApiExceptionFilterAttribute());
-                options.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status406NotAcceptable));
-                options.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
-                options.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status401Unauthorized));
                 options.ReturnHttpNotAcceptable = true;
             }).AddFluentValidation();
         }

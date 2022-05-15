@@ -1,4 +1,6 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Bookings.Queries.GetBookings;
+using Application.Common.Interfaces;
+using Application.Services.Interfaces;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Bookings.Commands
 {
-    public class CreateBookingCommand : IRequest<int>
+    public class CreateBookingCommand : IRequest<BookingDto>
     {
         public DateTime FromDateTime { get; set; }
         public DateTime ReturnDateTime { get; set; }
@@ -21,37 +23,18 @@ namespace Application.Bookings.Commands
 
     }
 
-    public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, int>
+    public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, BookingDto>
     {
-        private readonly IApplicationDbContext _context;
+        public readonly IBookingService _bookingService;
 
-        public CreateBookingCommandHandler(IApplicationDbContext context)
+        public CreateBookingCommandHandler(IBookingService bookingService)
         {
-            _context = context;
+            _bookingService = bookingService;
         }
 
-        public async Task<int> Handle(CreateBookingCommand command, CancellationToken cancellationToken)
+        public Task<BookingDto> Handle(CreateBookingCommand command, CancellationToken cancellationToken)
         {
-            var entity = new Booking
-
-            {
-                FromDateTime = DateTime.Today,
-                ReturnDateTime = DateTime.Today,
-                // TODO: remove and use enumeration
-                Status = "Cancelled",
-                // TODO: removed and calculate based on package + car + ...
-                Amount = 569.5,
-                CustomerId = command.CustomerId,
-                CarId = command.CarId,
-                InvoiceId = null,
-                PickUpLocationId = command.PickUpLocationId,
-                DropOffLocationId = command.DropOffLocationId,
-                PackageId = command.PackageId
-            };
-
-            _context.Bookings.Add(entity);
-            await _context.SaveChangesAsync(cancellationToken);
-            return entity.Id;
+            return _bookingService.CreateNewBookingAsync(command, cancellationToken);
         }
     }
 }

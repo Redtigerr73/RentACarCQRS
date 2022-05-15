@@ -1,4 +1,6 @@
 ﻿using Application.Common.Behaviours;
+using Application.Services.Implementations;
+using Application.Services.Interfaces;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ namespace Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddTransient<IBookingService, BookingServiceImp>();
             return services;
         }
     }

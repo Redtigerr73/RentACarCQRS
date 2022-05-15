@@ -1,0 +1,32 @@
+﻿
+using Application.Bookings.Commands;
+using Application.Bookings.Queries.GetBookings;
+using Application.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Application.Services.Interfaces
+{
+    public interface IBookingService
+    {
+        Task<BookingsVm> GetAllBookingsAsync(CancellationToken cancellationToken);
+        Task<BookingsVm> BookingDetailsAsync(int? id, CancellationToken cancellationToken);
+        Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand comman, CancellationToken cancellationToken);
+        Task<BookingsVm> DisplayBookingAsync(int? id, CancellationToken cancellationToken);
+        Task<BookingsVm> EditBookingAsync(int id, CreateBookingCommand command, CancellationToken cancellationToken);
+        Task<BookingsVm> CancelBookingAsync(int? id, CancellationToken cancellationToken);
+        Task AfterCancelBookingAsync(int id, CancellationToken cancellationToken);
+        bool BookingExists(int? id, CancellationToken cancellationToken);
+        bool BookingIsCancelled(int? id, CancellationToken cancellationToken);
+        bool BookingIsBilled(int? id, CancellationToken cancellationToken);
+        bool BillIsAllowed(int? id, CancellationToken cancellationToken);
+        bool BookingIsClosed(int? id, CancellationToken cancellationToken);
+        
+
+    }
+}
