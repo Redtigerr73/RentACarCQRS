@@ -4,6 +4,6 @@ namespace Application.Bookings.Queries.GetBookings
 {
     public class BookingsVm
     {
-        public IList<BookingDto> Bookings { get; set; }
+        public List<BookingDto> Bookings { get; set; }
     }
 }

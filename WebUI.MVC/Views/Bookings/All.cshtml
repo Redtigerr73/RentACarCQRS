@@ -1,0 +1,87 @@
+﻿@model WebUI.MVC.Models.Bookings
+
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+<h1>Bookings</h1>
+
+<!--CSS START-->
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<!--CSS END-->
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id = "datatables" class="table">
+    <thead>
+        <tr>
+            <th>
+                FromDateTime
+            </th>
+            <th>
+                ReturnDateTime
+            </th>
+            <th>
+                PickUpLocationId
+            </th>
+            <th>
+                DropOffLocationId
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                CarId
+            </th>
+           
+            <th>
+                PackageId
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in @Model.BookingList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PickUpLocationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DropOffLocationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PackageId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<!--SCRIPTS START-->
+@section Scripts
+{
+
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/js/datatables.js"></script>
+}
+<!--SCRIPTS END-->

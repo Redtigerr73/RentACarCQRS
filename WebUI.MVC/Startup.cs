@@ -1,9 +1,10 @@
-using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebUI.MVC.Services.Implementation;
+using WebUI.MVC.Services.Interfaces;
 
 namespace WebUI.MVC
 {
@@ -20,7 +21,9 @@ namespace WebUI.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddInfrastructure(Configuration);
+            services.AddHttpClient<IBookingService, BookingServiceImp>();
+            services.AddTransient<IBookingService, BookingServiceImp>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
