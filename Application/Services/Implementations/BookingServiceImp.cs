@@ -6,6 +6,7 @@ using Application.Services.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Entities;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,21 @@ namespace Application.Services.Implementations
             {
                 throw new ValidationException();
             }
+            
+        }
+
+        public async Task<int> UpdateBookingAsync(UpdateBookingCommand command, CancellationToken cancellationToken)
+        {
+            var booking = await _context.Bookings.FindAsync(command.Id);
+
+            if (booking == null) throw new Exception();
+
+            booking.DropOffLocationId = command.DropOffLocationId;
+            booking.PickUpLocationId = command.PickUpLocationId;
+             _context.Bookings.Update(booking);
+
+            await _context.SaveChangesAsync(cancellationToken);
+            return booking.Id;
             
         }
 

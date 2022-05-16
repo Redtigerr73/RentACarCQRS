@@ -1,5 +1,7 @@
 ﻿using Application.Common.CustomErrors;
 using Application.Common.Interfaces;
+using Application.Services.Implementations;
+using Application.Services.Interfaces;
 using Domain.Entities;
 using MediatR;
 using System.Threading;
@@ -7,39 +9,28 @@ using System.Threading.Tasks;
 
 namespace Application.Bookings.Commands
 {
-    public class UpdateBookingCommand : IRequest
+    public class UpdateBookingCommand : IRequest<int>
     {
         public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public bool IsPayed { get; set; }
+        public int PickUpLocationId { get; set; }
+        public int DropOffLocationId { get; set; }
     }
 
-    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateBookingCommand>
+    public class UpdateBookingCommandHandler : IRequestHandler<UpdateBookingCommand, int>
     {
-        private readonly IApplicationDbContext _context;
 
-        public UpdateTodoItemCommandHandler(IApplicationDbContext context)
+        private readonly IBookingService _service;
+
+        public UpdateBookingCommandHandler(IBookingService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public async Task<Unit> Handle(UpdateBookingCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdateBookingCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Bookings.FindAsync(request.Id);
+            return await _service.UpdateBookingAsync(request, cancellationToken);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Booking), request.Id);
-            }
 
-            //entity.Name = request.Name;
-            //entity.IsPayed = request.IsPayed;
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
         }
     }
 }
