@@ -16,7 +16,8 @@ namespace Application.Services.Interfaces
     {
         Task<BookingsVm> GetAllBookingsAsync(CancellationToken cancellationToken);
         Task<BookingsVm> BookingDetailsAsync(int? id, CancellationToken cancellationToken);
-        Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand comman, CancellationToken cancellationToken);
+        Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand command, CancellationToken cancellationToken);
+        Task<int> UpdateBookingAsync(UpdateBookingCommand command, CancellationToken cancellationToken);
         Task<BookingsVm> DisplayBookingAsync(int? id, CancellationToken cancellationToken);
         Task<BookingsVm> EditBookingAsync(int id, CreateBookingCommand command, CancellationToken cancellationToken);
         Task<BookingsVm> CancelBookingAsync(int? id, CancellationToken cancellationToken);

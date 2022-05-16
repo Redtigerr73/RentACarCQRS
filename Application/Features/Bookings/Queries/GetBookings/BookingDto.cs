@@ -16,6 +16,8 @@ namespace Application.Bookings.Queries.GetBookings
         public int Id { get; set; }
         public DateTime FromDateTime { get; set; }
         public DateTime ReturnDateTime { get; set; }
+        public int PickUpLocationId { get; set; }
+        public int DropOffLocationId { get; set; }
         public string Status { get; set; }
         public double Amount { get; set; }
         public int CustomerId { get; set; }
