@@ -20,8 +20,7 @@ namespace Application.Services.Interfaces
         Task<int> UpdateBookingAsync(UpdateBookingCommand command, CancellationToken cancellationToken);
         Task<BookingsVm> DisplayBookingAsync(int? id, CancellationToken cancellationToken);
         Task<BookingsVm> EditBookingAsync(int id, CreateBookingCommand command, CancellationToken cancellationToken);
-        Task<BookingsVm> CancelBookingAsync(int? id, CancellationToken cancellationToken);
-        Task AfterCancelBookingAsync(int id, CancellationToken cancellationToken);
+        Task DeleteBookingAsync(int id, CancellationToken cancellationToken);
         bool BookingExists(int? id, CancellationToken cancellationToken);
         bool BookingIsCancelled(int? id, CancellationToken cancellationToken);
         bool BookingIsBilled(int? id, CancellationToken cancellationToken);
