@@ -107,14 +107,13 @@ namespace Application.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<BookingsVm> CancelBookingAsync(int? id, CancellationToken cancellationToken)
+        public async Task DeleteBookingAsync(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null) throw new NotFoundException(nameof(Booking), id);
 
-        public Task AfterCancelBookingAsync(int id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            _context.Bookings.Remove(booking);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public bool BookingExists(int? id, CancellationToken cancellationToken)

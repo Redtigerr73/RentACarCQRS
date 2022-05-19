@@ -1,5 +1,6 @@
 ﻿using Application.Common.CustomErrors;
 using Application.Common.Interfaces;
+using Application.Services.Interfaces;
 using Domain.Entities;
 using MediatR;
 using System.Threading;
@@ -14,26 +15,16 @@ namespace Application.Bookings.Commands
 
     public class DeleteBookingCommandHandler : IRequestHandler<DeleteBookingCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IBookingService _bookingService;
 
-        public DeleteBookingCommandHandler(IApplicationDbContext context)
+        public DeleteBookingCommandHandler(IBookingService bookingService)
         {
-            _context = context;
+            _bookingService = bookingService;
         }
 
         public async Task<Unit> Handle(DeleteBookingCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Bookings.FindAsync(request.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Booking), request.Id);
-            }
-
-            _context.Bookings.Remove(entity);
-
-            await _context.SaveChangesAsync(cancellationToken);
-
+            await _bookingService.DeleteBookingAsync(request.Id, cancellationToken);
             return Unit.Value;
         }
     }
