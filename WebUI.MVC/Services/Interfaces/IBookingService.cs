@@ -8,5 +8,6 @@ namespace WebUI.MVC.Services.Interfaces
     public interface IBookingService
     {
         Task<Bookings> GetAllAsync();
+        Task<Booking> CreateAsync(Booking booking);
     }
 }
