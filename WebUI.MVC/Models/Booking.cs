@@ -17,7 +17,6 @@ namespace WebUI.MVC.Models
         public int CarId { get; set; }
         public int? InvoiceId { get; set; }
         public int? PackageId { get; set; }
-
     }
 
     
