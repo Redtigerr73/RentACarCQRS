@@ -3,6 +3,7 @@ using Application.Bookings.Queries.GetBookings;
 using Application.Features.Bookings.Queries.GetBookings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace RentACarApi.Controllers

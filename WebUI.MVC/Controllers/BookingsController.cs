@@ -25,6 +25,12 @@ namespace WebUI.MVC.Controllers
             return View(bookings);
         }
 
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Booking booking)
@@ -33,17 +39,51 @@ namespace WebUI.MVC.Controllers
             return RedirectToAction("All");
         }
 
-        
         public async Task<IActionResult> Details(int? id)
         {
             var booking = await _service.BookingDetailsAsync(id);
             return View(booking);
         }
 
-        public IActionResult Create()
+      
+        
+        public async Task<IActionResult> Update(int? id)
         {
-            return View();
+            if (id == null)
+                return NotFound();
+            var booking = await _service.BookingDetailsAsync(id);
+            if (booking == null)
+                return NotFound();
+            return View(booking);
         }
         
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id, Booking booking)
+        {
+            await _service.UpdateBookingAsync(id, booking);
+
+            return RedirectToAction("All");
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if(id == null)
+            {
+                NotFound();
+            }
+            var booking = await _service.BookingDetailsAsync(id);
+            return View(booking);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            await _service.DeleteBookingAsync(id);
+            return RedirectToAction("All");
+        }
+
+
+
     }
 }

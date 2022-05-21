@@ -10,5 +10,7 @@ namespace WebUI.MVC.Services.Interfaces
         Task<Bookings> GetAllAsync();
         Task<Booking> CreateAsync(Booking booking);
         Task<Booking> BookingDetailsAsync(int? id);
+        Task<Booking> UpdateBookingAsync(int? id, Booking booking);
+        Task DeleteBookingAsync(int? id);
     }
 }
