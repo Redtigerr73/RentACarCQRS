@@ -42,14 +42,14 @@ namespace Application.Services.Implementations
 
 
 
-        public async Task<BookingsVm> BookingDetailsAsync(int? id, CancellationToken cancellationToken)
+        public async Task<BookingDto> BookingDetailsAsync(int? id, CancellationToken cancellationToken)
         {
             var allBookings = await _context.Bookings
             
             .ToListAsync(cancellationToken);
 
             var bookingById = allBookings.FirstOrDefault(b => b.Id == id);
-            return _mapper.Map<BookingsVm>(bookingById);
+            return _mapper.Map<BookingDto>(bookingById);
         }
 
         public async Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand command, CancellationToken cancellationToken)

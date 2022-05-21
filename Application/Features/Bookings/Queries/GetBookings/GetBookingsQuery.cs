@@ -18,10 +18,8 @@ namespace Application.Bookings.Queries.GetBookings
 
     public class GetbookingsQueryHandler : IRequestHandler<GetBookingsQuery, BookingsVm>
     {
-        /*private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;*/
-        public readonly IBookingService _bookingService;     
-            
+    
+        public readonly IBookingService _bookingService;                 
         
 
         public GetbookingsQueryHandler(IBookingService bookingService)

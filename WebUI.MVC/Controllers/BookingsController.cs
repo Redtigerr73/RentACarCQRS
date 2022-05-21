@@ -18,6 +18,7 @@ namespace WebUI.MVC.Controllers
             return View();
         }
 
+        
         public async Task<IActionResult> All()
         {
             var bookings = await _service.GetAllAsync();
@@ -30,6 +31,13 @@ namespace WebUI.MVC.Controllers
         {
             await _service.CreateAsync(booking);
             return RedirectToAction("All");
+        }
+
+        
+        public async Task<IActionResult> Details(int? id)
+        {
+            var booking = await _service.BookingDetailsAsync(id);
+            return View(booking);
         }
 
         public IActionResult Create()

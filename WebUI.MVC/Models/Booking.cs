@@ -7,6 +7,7 @@ namespace WebUI.MVC.Models
     [Serializable]
     public class Booking
     {
+        public int Id { get; set; }
         public DateTime FromDateTime { get; set; }
         public DateTime ReturnDateTime { get; set; }
         public int PickUpLocationId { get; set; }

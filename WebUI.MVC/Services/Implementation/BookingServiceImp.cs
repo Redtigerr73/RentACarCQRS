@@ -46,6 +46,22 @@ namespace WebUI.MVC.Services.Implementation
             return booking;
         }
 
+        public async Task<Booking> BookingDetailsAsync(int? id)
+        {
+            
+            var httpResponse = await _httpClient.GetAsync($"{BaseUrl}/api/v1/bookings/{id}");
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new System.Exception("Cannot retrieve the booking");
+            }
+
+            var content = await httpResponse.Content.ReadAsStringAsync();
+            var booking = JsonConvert.DeserializeObject<Booking>(content);
+            return booking;
+        }
+
+      
+
         //private static async Task PostBasicAsync(object content, CancellationToken cancellationToken)
         //{
         //    using (var client = new HttpClient())
@@ -63,7 +79,7 @@ namespace WebUI.MVC.Services.Implementation
         //            }
         //        }
         //    }
-        
+
 
     }
 }

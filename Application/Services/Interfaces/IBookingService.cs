@@ -15,7 +15,7 @@ namespace Application.Services.Interfaces
     public interface IBookingService
     {
         Task<BookingsVm> GetAllBookingsAsync(CancellationToken cancellationToken);
-        Task<BookingsVm> BookingDetailsAsync(int? id, CancellationToken cancellationToken);
+        Task<BookingDto> BookingDetailsAsync(int? id, CancellationToken cancellationToken);
         Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand command, CancellationToken cancellationToken);
         Task<int> UpdateBookingAsync(UpdateBookingCommand command, CancellationToken cancellationToken);
         Task<BookingsVm> DisplayBookingAsync(int? id, CancellationToken cancellationToken);

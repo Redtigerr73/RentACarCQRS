@@ -1,5 +1,6 @@
 ﻿using Application.Bookings.Commands;
 using Application.Bookings.Queries.GetBookings;
+using Application.Features.Bookings.Queries.GetBookings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,6 +16,11 @@ namespace RentACarApi.Controllers
         public async Task<ActionResult<BookingsVm>> Get()
         {
             return await Mediator.Send(new GetBookingsQuery());
+        }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<BookingDto>> GetBooking(int id)
+        {
+            return await Mediator.Send(new GetBookingByIdQuery(id));
         }
 
         [Route("create")]
