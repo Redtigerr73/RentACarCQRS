@@ -1,17 +1,22 @@
 ﻿@model WebUI.MVC.Models.Booking
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Update";
 }
 
-<h1>Create</h1>
+<h1>Update</h1>
 
 <h4>Booking</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="FromDateTime" class="control-label"></label>
                 <input asp-for="FromDateTime" class="form-control" />
@@ -27,11 +32,20 @@
                 <input asp-for="PickUpLocationId" class="form-control" />
                 <span asp-validation-for="PickUpLocationId" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="DropOffLocationId" class="control-label"></label>
                 <input asp-for="DropOffLocationId" class="form-control" />
                 <span asp-validation-for="DropOffLocationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label"></label>
@@ -44,19 +58,24 @@
                 <span asp-validation-for="CarId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="InvoiceId" class="control-label"></label>
+                <input asp-for="InvoiceId" class="form-control" />
+                <span asp-validation-for="InvoiceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PackageId" class="control-label"></label>
                 <input asp-for="PackageId" class="form-control" />
                 <span asp-validation-for="PackageId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a class="btn btn-primary" asp-action="Bookings">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

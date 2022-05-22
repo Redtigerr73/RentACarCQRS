@@ -11,11 +11,14 @@
 <!--CSS END-->
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 <table id = "datatables" class="table">
     <thead>
         <tr>
+            <th>
+                Id
+            </th>
             <th>
                 FromDateTime
             </th>
@@ -28,22 +31,15 @@
             <th>
                 DropOffLocationId
             </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                CarId
-            </th>
-           
-            <th>
-                PackageId
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in @Model.BookingList) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FromDateTime)
             </td>
@@ -57,18 +53,9 @@
                 @Html.DisplayFor(modelItem => item.DropOffLocationId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PackageId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
             </td>
         </tr>
 }

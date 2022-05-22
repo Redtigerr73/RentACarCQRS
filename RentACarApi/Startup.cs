@@ -73,7 +73,6 @@ namespace RentACarApi
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ApiExceptionFilterAttribute());
-                options.ReturnHttpNotAcceptable = true;
             }).AddFluentValidation();
         }
 

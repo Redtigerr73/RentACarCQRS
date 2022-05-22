@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -60,7 +61,34 @@ namespace WebUI.MVC.Services.Implementation
             return booking;
         }
 
-      
+        public async Task<Booking> UpdateBookingAsync(int? id, Booking booking)
+        {
+            var json = JsonConvert.SerializeObject(booking);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpResponse = await _httpClient.PutAsync($"{BaseUrl}/api/v1/bookings/{id}", content);
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new System.Exception("Cannot create the booking");
+            }
+
+            var responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return booking;
+        }
+
+        public async Task DeleteBookingAsync(int? id)
+        {
+            var httpResponse = await _httpClient.DeleteAsync($"{BaseUrl}/api/v1/bookings/{id}");
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new Exception("Cannot delete requested Id");
+            }
+        }
+
+
+
+
+
 
         //private static async Task PostBasicAsync(object content, CancellationToken cancellationToken)
         //{
