@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Bookings.Commands
 {
+    //TODO: Map correct attributes to update
     public class UpdateBookingCommand : IRequest<int>
     {
         public int Id { get; set; }
