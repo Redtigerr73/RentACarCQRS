@@ -33,6 +33,7 @@ namespace RentACarApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Update(int id, UpdateBookingCommand command)
         {
             if (id != command.Id)

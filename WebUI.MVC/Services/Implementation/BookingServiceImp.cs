@@ -68,11 +68,9 @@ namespace WebUI.MVC.Services.Implementation
             var httpResponse = await _httpClient.PutAsync($"{BaseUrl}/api/v1/bookings/{id}", content);
             if (!httpResponse.IsSuccessStatusCode)
             {
-                throw new System.Exception("Cannot create the booking");
+                throw new System.Exception("Cannot update the booking");
             }
-
-            var responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-
+            
             return booking;
         }
 

@@ -81,7 +81,7 @@ namespace Application.Services.Implementations
             }
             
         }
-
+        //TODO: Map correct attributes to update
         public async Task<int> UpdateBookingAsync(UpdateBookingCommand command, CancellationToken cancellationToken)
         {
             var booking = await _context.Bookings.FindAsync(command.Id);
