@@ -1,8 +1,14 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System;
+using System.Threading.Tasks;
 using WebUI.MVC.Services.Implementation;
 using WebUI.MVC.Services.Interfaces;
 
@@ -23,7 +29,53 @@ namespace WebUI.MVC
             services.AddControllersWithViews();
             services.AddHttpClient<IBookingService, BookingServiceImp>();
             services.AddTransient<IBookingService, BookingServiceImp>();
-            
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                option.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie()
+            .AddOpenIdConnect("Auth0", option =>
+            {
+                //Define the autority
+                option.Authority = $"https://{Configuration["Auth0:Domain"]}";
+                option.ClientId = Configuration["Auth0:ClientId"];
+                option.ClientSecret = Configuration["Auth0:ClientSecret"];
+                //Authorization Code
+                option.ResponseType = OpenIdConnectResponseType.Code;
+                //Define the need scope
+                option.Scope.Clear();
+                option.Scope.Add("openid");
+                option.Scope.Add("profile");
+                //define callback 
+                option.CallbackPath = new PathString("/callback");
+                option.SaveTokens = true;
+                option.ClaimsIssuer = "Auth0";
+                //Add events for logout (and maybe more ;-))
+                option.Events = new OpenIdConnectEvents
+                {
+                    OnRedirectToIdentityProviderForSignOut = (context) =>
+                    {
+                        var logoutUri = $"https://{Configuration["Auth0:Domain"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}";
+
+                        var postLogoutUri = context.Properties.RedirectUri;
+                        if (!string.IsNullOrEmpty(postLogoutUri))
+                        {
+                            if (postLogoutUri.StartsWith("/"))
+                            {
+                                var request = context.Request;
+                                postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
+                            }
+                            logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
+                        }
+                        context.Response.Redirect(logoutUri);
+                        context.HandleResponse();
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,10 +92,13 @@ namespace WebUI.MVC
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseCookiePolicy();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
