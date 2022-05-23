@@ -1,6 +1,8 @@
 using Application;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RentACarApi.Filters;
+using RentACarApi.Handler;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 
@@ -32,6 +35,24 @@ namespace RentACarApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            var domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:Audience"];
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("read:bookings", domain)));
+                options.AddPolicy("write:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("write:bookings", domain)));
+            });
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
             services.AddApiVersioning(options =>
             {
                 //To display current version to the user
@@ -97,6 +118,8 @@ namespace RentACarApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
