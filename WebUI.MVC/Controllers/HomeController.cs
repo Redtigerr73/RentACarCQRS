@@ -67,5 +67,11 @@ namespace WebUI.MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult CreateUser(User user)
+        {
+            // TO DO LATER
+            return View();
+        }
     }
 }
