@@ -2,6 +2,7 @@
 using Application.Bookings.Commands;
 using Application.Bookings.Queries.GetBookings;
 using Application.Common.Interfaces;
+using Application.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Application.Services.Interfaces
     public interface IBookingService
     {
         Task<BookingsVm> GetAllBookingsAsync(CancellationToken cancellationToken);
+        Task<Pagination<BookingDto>> GetAllBookingsWithPagination(int pageNumber, int pageSize, CancellationToken cancellationToken);
         Task<BookingDto> BookingDetailsAsync(int? id, CancellationToken cancellationToken);
         Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand command, CancellationToken cancellationToken);
         Task<int> UpdateBookingAsync(UpdateBookingCommand command, CancellationToken cancellationToken);

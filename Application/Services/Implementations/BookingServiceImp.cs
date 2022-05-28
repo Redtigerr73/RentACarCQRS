@@ -1,7 +1,9 @@
 ﻿using Application.Bookings.Commands;
 using Application.Bookings.Queries.GetBookings;
 using Application.Common.CustomErrors;
+using Application.Common.Extensions;
 using Application.Common.Interfaces;
+using Application.Common.Models;
 using Application.Services.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -139,6 +141,15 @@ namespace Application.Services.Implementations
         public bool BookingIsClosed(int? id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Pagination<BookingDto>> GetAllBookingsWithPagination(int pageNumber, int pageSize, CancellationToken cancellationToken)
+        {
+            var paginatedList = await _context.Bookings
+                  .ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
+                  .PaginationAsync(pageNumber, pageSize);
+
+            return paginatedList;   
         }
     }
 }

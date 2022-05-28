@@ -1,4 +1,5 @@
 ﻿using Application.Common.Behaviours;
+using Application.Common.Models;
 using Application.Services.Implementations;
 using Application.Services.Interfaces;
 using FluentValidation;
@@ -16,7 +17,11 @@ namespace Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddTransient<IBookingService, BookingServiceImp>();
+            services.AddScoped<IBookingService, BookingServiceImp>();
+            services.AddScoped<IApiConsume,ApiConsumeImp>();
+            services.AddSingleton(new RetryPolicy());
+            services.AddHttpClient("PolicyCircuitBreaker")
+                .AddPolicyHandler(request => new RetryPolicy().CircuitBreaker);
             return services;
         }
     }

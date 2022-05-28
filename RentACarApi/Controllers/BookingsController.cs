@@ -1,5 +1,6 @@
 ﻿using Application.Bookings.Commands;
 using Application.Bookings.Queries.GetBookings;
+using Application.Common.Models;
 using Application.Features.Bookings.Queries.GetBookings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -57,5 +58,17 @@ namespace RentACarApi.Controllers
 
             return NoContent();
         }
+        [Route("paginatedBookings")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<Pagination<BookingDto>>> PaginatedResult([FromQuery]GetPaginatedBookingsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
     }
+
 }
+
+
+
