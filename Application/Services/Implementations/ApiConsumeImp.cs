@@ -32,7 +32,7 @@ namespace Application.Services.Implementations
 				Headers =
 				{
 					{ "X-RapidAPI-Host", "gas-price.p.rapidapi.com" },
-					{ "X-RapidAPI-Key", "26d1200e4bmshfa1a53e4b6b905bp16d174jsnf58a36735c35" },
+					{ "X-RapidAPI-Key", "8fdb66ad85mshf6188e57f3638c0p1c82b8jsn6297d86e7b4f" },
 				},
 			};
 			using (var response = await client.SendAsync(request))
