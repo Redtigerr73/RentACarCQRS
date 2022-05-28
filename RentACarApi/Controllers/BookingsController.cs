@@ -5,6 +5,7 @@ using Application.Features.Bookings.Queries.GetBookings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RentACarApi.Filters;
 using System.Net.Mime;
 using System.Threading.Tasks;
 

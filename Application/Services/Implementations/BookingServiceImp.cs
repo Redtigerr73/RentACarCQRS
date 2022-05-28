@@ -32,13 +32,11 @@ namespace Application.Services.Implementations
 
         public async Task<BookingsVm> GetAllBookingsAsync(CancellationToken cancellationToken)
         {
-
             return new BookingsVm
             {
              Bookings = await _context.Bookings
             .ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken)
-
             };
         }
 
@@ -46,12 +44,17 @@ namespace Application.Services.Implementations
 
         public async Task<BookingDto> BookingDetailsAsync(int? id, CancellationToken cancellationToken)
         {
-            var allBookings = await _context.Bookings
-            
-            .ToListAsync(cancellationToken);
-
-            var bookingById = allBookings.FirstOrDefault(b => b.Id == id);
-            return _mapper.Map<BookingDto>(bookingById);
+         
+                var bookingById = await _context.Bookings.FindAsync(id);
+                if (bookingById == null)
+                {
+                    throw new NotFoundException(nameof(Booking), id);
+                }
+                //var bookingById = allBookings.FirstOrDefault(b => b.Id == id);
+                return _mapper.Map<BookingDto>(bookingById);
+           
+           
+       
         }
 
         public async Task<BookingDto> CreateNewBookingAsync(CreateBookingCommand command, CancellationToken cancellationToken)

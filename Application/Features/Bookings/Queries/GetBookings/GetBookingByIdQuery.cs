@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Bookings.Queries.GetBookings
 {
-    public record GetBookingByIdQuery(int id) : IRequest<BookingDto>
+    public record GetBookingByIdQuery(int Id) : IRequest<BookingDto>
     {
         
     }
@@ -29,7 +29,7 @@ namespace Application.Features.Bookings.Queries.GetBookings
 
             public Task<BookingDto> Handle(GetBookingByIdQuery request, CancellationToken cancellationToken)
             {
-                return _bookingService.BookingDetailsAsync(request.id, cancellationToken);
+                return _bookingService.BookingDetailsAsync(request.Id, cancellationToken);
 
             }
 
