@@ -17,7 +17,7 @@ namespace RentACarApi.Controllers
     public class BookingsController : MediatorController
     {
         [HttpGet]
-        [Authorize("read:bookings")]
+        [Authorize(Policy = "read:bookings")]
         public async Task<ActionResult<BookingsVm>> Get()
         {
             return await Mediator.Send(new GetBookingsQuery());
@@ -31,7 +31,7 @@ namespace RentACarApi.Controllers
         [Route("create")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [Authorize("write:bookings")]
+        //[Authorize("write:bookings")]
         public async Task<ActionResult<BookingDto>> Create(CreateBookingCommand command)
         {
             var entity = await Mediator.Send(command);

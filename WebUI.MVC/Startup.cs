@@ -47,6 +47,9 @@ namespace WebUI.MVC
                 option.Scope.Clear();
                 option.Scope.Add("openid");
                 option.Scope.Add("profile");
+                option.Scope.Add("read:bookings");
+                //option.Scope.Add("write:bookings");
+                //option.Scope.Add("delete:bookings");
                 //define callback 
                 option.CallbackPath = new PathString("/callback");
                 option.SaveTokens = true;
@@ -71,7 +74,24 @@ namespace WebUI.MVC
                         context.Response.Redirect(logoutUri);
                         context.HandleResponse();
                         return Task.CompletedTask;
+                    },
+                    OnRedirectToIdentityProvider = context =>
+                    {
+                        context.ProtocolMessage.SetParameter("audience", Configuration["Auth0:Audience"]);
+                        return Task.FromResult(0);
+                    },
+
+                    OnMessageReceived = context =>
+                    {
+                        if (context.ProtocolMessage.Error == "access_denied")
+                        {
+                            context.HandleResponse();
+                            context.Response.Redirect("/Bookings/AccessDenied");
+
+                        }
+                        return Task.FromResult(0);
                     }
+                   
                 };
             });
 
