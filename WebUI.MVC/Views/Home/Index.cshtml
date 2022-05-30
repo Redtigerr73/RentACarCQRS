@@ -1,9 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
+<div class="text-center" id="slideit" style="width:100vh;height:100vh;" >
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     
 </div>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(window).load(function() {           
+      var i =0; 
+      var images = ['Images/1.jpg','Images/2.jpg','Images/3.jpg'];
+      var image = $('#slideit');
+                    //Initial Background image setup
+      image.css('background-image', 'url(Images/1.jpg)');
+                    //Change image at regular intervals
+      setInterval(function(){   
+       image.fadeOut(1000, function () {
+       image.css('background-image', 'url(' + images [i++] +')');
+       image.fadeIn(1000);
+       });
+       if(i == images.length)
+        i = 0;
+      }, 5000);            
+     });
+    </script>

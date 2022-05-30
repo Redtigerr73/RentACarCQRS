@@ -23,6 +23,7 @@ namespace WebUI.MVC.Services.Implementation
 
         public async Task<Bookings> GetAllAsync()
         {
+            //_httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", )
             var httpResponse = await _httpClient.GetAsync($"{BaseUrl}/api/v1/bookings");
             if(!httpResponse.IsSuccessStatusCode)
             {
