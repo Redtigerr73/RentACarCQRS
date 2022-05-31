@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebUI.MVC.Models;
 using WebUI.MVC.Services.Interfaces;
@@ -21,7 +22,7 @@ namespace WebUI.MVC.Controllers
         
         public async Task<IActionResult> All()
         {
-            var bookings = await _service.GetAllAsync();
+            var bookings = await _service.GetAllAsync(await HttpContext.GetTokenAsync("access_token"));
             return View(bookings);
         }
 

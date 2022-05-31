@@ -21,9 +21,9 @@ namespace WebUI.MVC.Services.Implementation
             BaseUrl = configuration["BaseUrl"];
         }
 
-        public async Task<Bookings> GetAllAsync()
+        public async Task<Bookings> GetAllAsync(string? accessToken)
         {
-            //_httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", )
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             var httpResponse = await _httpClient.GetAsync($"{BaseUrl}/api/v1/bookings");
             if(!httpResponse.IsSuccessStatusCode)
             {
