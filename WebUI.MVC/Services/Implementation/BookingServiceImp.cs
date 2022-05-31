@@ -21,7 +21,7 @@ namespace WebUI.MVC.Services.Implementation
             BaseUrl = configuration["BaseUrl"];
         }
 
-        public async Task<Bookings> GetAllAsync(string? accessToken)
+        public async Task<Bookings> GetAllAsync(string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             var httpResponse = await _httpClient.GetAsync($"{BaseUrl}/api/v1/bookings");
@@ -35,8 +35,9 @@ namespace WebUI.MVC.Services.Implementation
             return bookings;
         }
 
-        public async Task<Booking> CreateAsync(Booking booking)
+        public async Task<Booking> CreateAsync(Booking booking, string accessToken)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             var json = JsonConvert.SerializeObject(booking);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var httpResponse = await _httpClient.PostAsync($"{BaseUrl}/api/v1/bookings/create", content);

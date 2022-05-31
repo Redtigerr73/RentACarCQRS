@@ -36,9 +36,9 @@ namespace RentACarApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Test
-            services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
             services.AddControllers(opt => opt.Filters.Add<ApiExceptionFilterAttribute>());
             var domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
@@ -118,8 +118,7 @@ namespace RentACarApi
                         new string[] { }
                     }
                 });
-                services.AddApplication();
-                services.AddInfrastructure(Configuration);
+                
 
 
                 services.AddMvc(options =>

@@ -16,12 +16,13 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddScoped<IBookingService, BookingServiceImp>();
             services.AddScoped<IApiConsume,ApiConsumeImp>();
             services.AddSingleton(new RetryPolicy());
             services.AddHttpClient("PolicyCircuitBreaker")
                 .AddPolicyHandler(request => new RetryPolicy().CircuitBreaker);
+            
             return services;
         }
     }

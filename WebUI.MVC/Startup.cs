@@ -29,6 +29,7 @@ namespace WebUI.MVC
             services.AddControllersWithViews();
             services.AddHttpClient<IBookingService, BookingServiceImp>();
             services.AddTransient<IBookingService, BookingServiceImp>();
+            services.AddTransient<IUserManagement, UserManagementImp>();
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -48,8 +49,8 @@ namespace WebUI.MVC
                 option.Scope.Add("openid");
                 option.Scope.Add("profile");
                 option.Scope.Add("read:bookings");
-                //option.Scope.Add("write:bookings");
-                //option.Scope.Add("delete:bookings");
+                option.Scope.Add("write:bookings");
+                option.Scope.Add("delete:bookings");                
                 //define callback 
                 option.CallbackPath = new PathString("/callback");
                 option.SaveTokens = true;

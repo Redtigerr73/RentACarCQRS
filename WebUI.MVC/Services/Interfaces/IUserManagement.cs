@@ -7,5 +7,7 @@ namespace WebUI.MVC.Services.Interfaces
     {
         Task CreateUser(User user);
         Task<TokenData> GetToken();
+
+        Task<Users> GetAllUsers();
     }
 }
