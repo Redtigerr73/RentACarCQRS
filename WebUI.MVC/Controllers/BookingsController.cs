@@ -36,7 +36,7 @@ namespace WebUI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Booking booking)
         {
-            await _service.CreateAsync(booking);
+            await _service.CreateAsync(booking, await HttpContext.GetTokenAsync("access_token"));
             return RedirectToAction("All");
         }
 

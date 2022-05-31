@@ -17,18 +17,13 @@ namespace RentACarApi.Controllers
     [ApiVersion("1.0")]
     public class BookingsController : MediatorController
     {
-        private readonly IMediator _mediator;
-
-        public BookingsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        
 
         [HttpGet]
         [Authorize("read:bookings")]
         public async Task<ActionResult<BookingsVm>> Get()
         {
-            return await _mediator.Send(new GetBookingsQuery());
+            return await Mediator.Send(new GetBookingsQuery());
         }
         [HttpGet("{id:int}")]
         public async Task<ActionResult<BookingDto>> GetBooking(int id)
@@ -39,12 +34,12 @@ namespace RentACarApi.Controllers
         [Route("create")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        //[Authorize("write:bookings")]
+        [Authorize("write:bookings")]
         public async Task<ActionResult<BookingDto>> Create(CreateBookingCommand command)
         {
             var entity = await Mediator.Send(command);
             return entity;
-            //return await Mediator.Send(command);
+            return await Mediator.Send(command);
         }
 
         [HttpPut("{id}")]

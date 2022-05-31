@@ -11,14 +11,13 @@ namespace WebUI.MVC.Services.Implementation
 {
     public class UserManagementImp : IUserManagement
     {
-        private string BaseUrl;
+        
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
         public UserManagementImp(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            BaseUrl = configuration["BaseUrl"];
             _configuration = configuration;
         }
 
@@ -28,16 +27,21 @@ namespace WebUI.MVC.Services.Implementation
             throw new System.NotImplementedException();
         }
 
+        public Task<Users> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<TokenData> GetToken()
         {
             var response =
-                await _httpClient.PostAsync(_configuration["Auth0ManagementApi:Path"], new FormUrlEncodedContent(
+                await _httpClient.PostAsync(_configuration["UserManagementAPI:AuthPath"], new FormUrlEncodedContent(
                     new Dictionary<string, string>
                     {
-                        { "client_id", _configuration["Auth0ManagementApi:ClientId"] },
-                        { "grant_type", _configuration["Auth0ManagementApi:GrantType"] },
-                        { "client_secret", _configuration["Auth0ManagementApi:ClientSecret"] },
-                        { "audience", _configuration["Auth0ManagementApi:Audience"] },
+                        { "client_id", _configuration["UserManagementAPI:ClientId"] },
+                        { "grant_type", _configuration["UserManagementAPI:GrantType"] },
+                        { "client_secret", _configuration["UserManagementAPI:ClientSecret"] },
+                        { "audience", _configuration["UserManagementAPI:Audience"] },
                     }));
             if (!response.IsSuccessStatusCode)
             {
