@@ -1,6 +1,7 @@
 using Application;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,7 @@ using RentACarApi.Filters;
 using RentACarApi.Handler;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
+using System.Reflection;
 
 namespace RentACarApi
 {
@@ -34,6 +36,9 @@ namespace RentACarApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Test
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
             services.AddControllers(opt => opt.Filters.Add<ApiExceptionFilterAttribute>());
             var domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>

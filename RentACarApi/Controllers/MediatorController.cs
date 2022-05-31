@@ -13,5 +13,6 @@ namespace RentACarApi.Controllers
 
         //TODO: Watch documentation
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
     }
 }

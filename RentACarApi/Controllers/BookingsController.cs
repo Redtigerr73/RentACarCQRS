@@ -2,6 +2,7 @@
 using Application.Bookings.Queries.GetBookings;
 using Application.Common.Models;
 using Application.Features.Bookings.Queries.GetBookings;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +17,18 @@ namespace RentACarApi.Controllers
     [ApiVersion("1.0")]
     public class BookingsController : MediatorController
     {
+        private readonly IMediator _mediator;
+
+        public BookingsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
-        [Authorize(Policy = "read:bookings")]
+        [Authorize("read:bookings")]
         public async Task<ActionResult<BookingsVm>> Get()
         {
-            return await Mediator.Send(new GetBookingsQuery());
+            return await _mediator.Send(new GetBookingsQuery());
         }
         [HttpGet("{id:int}")]
         public async Task<ActionResult<BookingDto>> GetBooking(int id)
