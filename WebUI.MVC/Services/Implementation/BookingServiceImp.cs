@@ -45,13 +45,11 @@ namespace WebUI.MVC.Services.Implementation
             {
                 throw new System.Exception("Cannot create the booking");
             }
-
             return booking;
         }
 
         public async Task<Booking> BookingDetailsAsync(int? id)
         {
-            
             var httpResponse = await _httpClient.GetAsync($"{BaseUrl}/api/v1/bookings/{id}");
             if (!httpResponse.IsSuccessStatusCode)
             {

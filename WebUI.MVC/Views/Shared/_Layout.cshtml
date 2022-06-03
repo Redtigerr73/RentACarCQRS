@@ -25,20 +25,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="All">All Bookings</a>
-                        </li>
-                        <!-- TO DO LATER ADD USER HAS ROLE -->
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateUser">User Management</a>
-        </li>
+                        
                         @if (User.Identity.IsAuthenticated)
                         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Claims">Claims</a>
-            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="All">All Bookings</a>
+                             </li>
+                         <!-- TO DO LATER ADD USER HAS ROLE -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateUser">User Management</a>
+                            </li>
+                            <li class="nav-item">
+                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Claims">Claims</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="GetAll">All Users</a>
+                            </li>
                         }
-        </ul>
+                       
+                    </ul>
         </div>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
             <ul class="nav navbar-nav navbar-right">

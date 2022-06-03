@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using WebUI.MVC.Models;
 using WebUI.MVC.Services.Interfaces;
@@ -27,9 +29,22 @@ namespace WebUI.MVC.Services.Implementation
             throw new System.NotImplementedException();
         }
 
-        public Task<Users> GetAllUsers()
+        public async Task<List<User>> GetAllUsers(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:GetUsersPath"];
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync(endPoint, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Unable to retrieve Users Data");
+            }
+
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
+            var users = JsonConvert.DeserializeObject<List<User>>(content);
+            return users;
         }
 
         public async Task<TokenData> GetToken()
