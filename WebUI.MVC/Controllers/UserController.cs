@@ -35,12 +35,10 @@ namespace WebUI.MVC.Controllers
         }
 
         [HttpGet]
-        
         public async Task<IActionResult> GetAll()
         {
-            var token = await _userManagement.GetToken();
-            Console.WriteLine("Token: " + token);
-            return RedirectToAction("Index");
+            var users = await _userManagement.GetAllUsers();
+            return View(users);
         }
     }
 }

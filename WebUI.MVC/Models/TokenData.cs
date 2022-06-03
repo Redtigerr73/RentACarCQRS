@@ -4,13 +4,13 @@ namespace WebUI.MVC.Models
 {
     public class TokenData
     {
-        [JsonProperty]
+        [JsonProperty("access_token")]
         public string AccessToken { get; set; }
-        [JsonProperty]
+        [JsonProperty("scope")]
         public string Scope { get; set; }
-        [JsonProperty]
+        [JsonProperty("expires_in")]
         public int ExpiresIn { get; set; }
-        [JsonProperty]
+        [JsonProperty("token_type")]
         public string TokenType { get; set; }
     }
 }

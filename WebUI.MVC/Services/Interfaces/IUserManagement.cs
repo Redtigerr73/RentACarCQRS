@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using WebUI.MVC.Models;
 
 namespace WebUI.MVC.Services.Interfaces
@@ -8,6 +10,6 @@ namespace WebUI.MVC.Services.Interfaces
         Task CreateUser(User user);
         Task<TokenData> GetToken();
 
-        Task<Users> GetAllUsers();
+        Task<List<User>> GetAllUsers(CancellationToken cancellationToken = default);
     }
 }
