@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using WebUI.MVC.Models;
 using WebUI.MVC.Services.Interfaces;
@@ -33,11 +34,35 @@ namespace WebUI.MVC.Controllers
             return RedirectToAction("GetAll");
         }
 
+        
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userManagement.GetAllUsers();
             return View(users);
+        }
+
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManagement.GetUserById(id);
+            if(user == null)
+            {
+                TempData["Message"] = "This user cannot be deleted";
+                return RedirectToAction("GetAll");
+            }
+
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
+        {
+
+            await _userManagement.DeleteById(id);
+            return RedirectToAction("GetAll");
         }
     }
 }
