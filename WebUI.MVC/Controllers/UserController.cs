@@ -29,9 +29,8 @@ namespace WebUI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(User user)
         {
-            var token = await _userManagement.GetToken();
-            Console.WriteLine("Token: " + token);
-            return RedirectToAction("Index");
+            var authEntity = await _userManagement.CreateUser(user);
+            return RedirectToAction("GetAll");
         }
 
         [HttpGet]

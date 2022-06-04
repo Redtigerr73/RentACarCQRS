@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WebUI.MVC.Models;
@@ -15,7 +16,7 @@ namespace WebUI.MVC.Services.Implementation
     {
         
         private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
+        private IConfiguration _configuration;
 
         public UserManagementImp(HttpClient httpClient, IConfiguration configuration)
         {
@@ -24,12 +25,26 @@ namespace WebUI.MVC.Services.Implementation
         }
 
 
-        public Task CreateUser(User user)
+        public async Task<Auth0Entity> CreateUser(User user)
         {
-            throw new System.NotImplementedException();
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:Audience"]+"users";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var authEntity = new Auth0Entity(user.Email, user.FirstName, user.LastName,user.Email, _configuration);
+            var content = JsonConvert.SerializeObject(authEntity);
+
+            var response = await _httpClient.PostAsync(endPoint, new StringContent(content, Encoding.Default, "application/json"));
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Could not create user ");
+            }
+
+            return authEntity;
+
         }
 
-        public async Task<List<User>> GetAllUsers(CancellationToken cancellationToken)
+        public async Task<List<UserVm>> GetAllUsers(CancellationToken cancellationToken)
         {
             var token = await GetToken();
             var accessToken = token.AccessToken;
@@ -43,7 +58,7 @@ namespace WebUI.MVC.Services.Implementation
             }
 
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
-            var users = JsonConvert.DeserializeObject<List<User>>(content);
+            var users = JsonConvert.DeserializeObject<List<UserVm>>(content);
             return users;
         }
 
