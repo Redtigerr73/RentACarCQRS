@@ -7,9 +7,9 @@ namespace WebUI.MVC.Services.Interfaces
 {
     public interface IUserManagement 
     {
-        Task CreateUser(User user);
+        Task<Auth0Entity> CreateUser(User user);
         Task<TokenData> GetToken();
 
-        Task<List<User>> GetAllUsers(CancellationToken cancellationToken = default);
+        Task<List<UserVm>> GetAllUsers(CancellationToken cancellationToken = default);
     }
 }
