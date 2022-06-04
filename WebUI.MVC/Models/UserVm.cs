@@ -17,10 +17,12 @@ namespace WebUI.MVC.Models
         [Required(ErrorMessage = "A name is required")]
         [DisplayName("Name")]
         public string Name { get; set; }
+        
         [JsonProperty("user_id")]
         [Required(ErrorMessage = "An email is required")]
-        [DisplayName("Pickup Date")]
+        [DisplayName("User Id")]
         public string UserId { get; set; }
+        
         [JsonProperty("last_login")]
         public DateTimeOffset LastLogin { get; set; }
     }

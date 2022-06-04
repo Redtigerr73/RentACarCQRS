@@ -6,7 +6,11 @@
     <title>@ViewData["Title"] - WebUI.MVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
 </head>
+
+<span id="Toastr" class="d-none">@TempData["Message"]</span>
+
 <body>
     <header>
         <!-- <div id="slideit" style="width:100vh;height:100vh;"> --!>
@@ -76,24 +80,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-         $(window).load(function() {
-         var i =0;
-         var images = ['Images/1.jpg','Images/2.jpg','Images/3.jpg'];
-         var image = $('#slideit');
-                       //Initial Background image setup
-         image.css('background-image', 'url(Images/1.jpg)');
-                       //Change image at regular intervals
-         setInterval(function(){
-          image.fadeOut(1000, function () {
-          image.css('background-image', 'url(' + images [i++] +')');
-          image.fadeIn(1000);
-          });
-          if(i == images.length)
-           i = 0;
-         }, 5000);
-        });
-    </script>
+    <script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>
+    <script src="~/js/toast.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

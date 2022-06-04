@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,20 @@ namespace WebUI.MVC.Services.Implementation
             }
 
             return authEntity;
+        }
+        public async Task DeleteById(string userId, CancellationToken cancellationToken)
+        {
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:Audience"]+$"users/{userId}";
 
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await _httpClient.DeleteAsync(endPoint);
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Could not delete user ");
+            }
         }
 
         public async Task<List<UserVm>> GetAllUsers(CancellationToken cancellationToken)
@@ -60,7 +74,9 @@ namespace WebUI.MVC.Services.Implementation
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var users = JsonConvert.DeserializeObject<List<UserVm>>(content);
             return users;
-        }
+        } 
+        
+        
 
         public async Task<TokenData> GetToken()
         {
@@ -80,6 +96,24 @@ namespace WebUI.MVC.Services.Implementation
             var content = await response.Content.ReadAsStringAsync();
             var tokenData = JsonConvert.DeserializeObject<TokenData>(content);
             return tokenData;
+        }
+
+        public async Task<UserVm> GetUserById(string id, CancellationToken cancellationToken = default)
+        {
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:Audience"]+"users/"+id+ _configuration["UserManagementAPI:GetUserIdFields"];
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync(endPoint, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Unable to retrieve Users Data");
+            }
+
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
+            var user = JsonConvert.DeserializeObject<UserVm>(content);
+            return user;
         }
     }
 }

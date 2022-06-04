@@ -7,7 +7,7 @@
 <h1>GetAll</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateUser">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -43,11 +43,14 @@
                 @Html.DisplayFor(modelItem => item.LastLogin)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id=item.UserId})
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>
+

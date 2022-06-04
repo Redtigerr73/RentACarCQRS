@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using WebUI.MVC.Models;
@@ -9,7 +10,8 @@ namespace WebUI.MVC.Services.Interfaces
     {
         Task<Auth0Entity> CreateUser(User user);
         Task<TokenData> GetToken();
-
+        Task DeleteById(string id, CancellationToken cancellationToken = default);
         Task<List<UserVm>> GetAllUsers(CancellationToken cancellationToken = default);
+        Task<UserVm> GetUserById(string id, CancellationToken cancellationToken = default);
     }
 }
