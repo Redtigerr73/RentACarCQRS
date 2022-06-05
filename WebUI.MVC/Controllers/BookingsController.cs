@@ -23,6 +23,7 @@ namespace WebUI.MVC.Controllers
         public async Task<IActionResult> All()
         {
             var bookings = await _service.GetAllAsync(await HttpContext.GetTokenAsync("access_token"));
+            //TempData["Message"] = "Success : All bookings has been loaded";
             return View(bookings);
         }
 
@@ -37,6 +38,7 @@ namespace WebUI.MVC.Controllers
         public async Task<IActionResult> Create(Booking booking)
         {
             await _service.CreateAsync(booking, await HttpContext.GetTokenAsync("access_token"));
+            TempData["Message"] = "Success : Booking has been created";
             return RedirectToAction("All");
         }
 
@@ -63,7 +65,7 @@ namespace WebUI.MVC.Controllers
         public async Task<IActionResult> Update(int? id, Booking booking)
         {
             await _service.UpdateBookingAsync(id, booking);
-
+            TempData["Message"] = "Success : Booking has been updated";
             return RedirectToAction("All");
         }
 
@@ -81,6 +83,7 @@ namespace WebUI.MVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             await _service.DeleteBookingAsync(id);
+            TempData["Message"] = "Warning : Booking has been deleted";
             return RedirectToAction("All");
         }
 

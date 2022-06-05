@@ -3,17 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebUI.MVC</title>
+    <title>@ViewData["Title"] - Rent A Car </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" asp-append-version="true"/>
 </head>
 
 <span id="Toastr" class="d-none">@TempData["Message"]</span>
 
 <body>
     <header>
-        <!-- <div id="slideit" style="width:100vh;height:100vh;"> --!>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebUI.MVC</a>
@@ -63,7 +62,6 @@
         </div>
         </div>
         </nav>
-        <!--  </div> -->
     </header>
 
     <div class="container">
@@ -77,12 +75,11 @@
             &copy; 2022 - WebUI.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>
     <script src="~/js/toast.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
