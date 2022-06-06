@@ -64,5 +64,12 @@ namespace WebUI.MVC.Controllers
             TempData["Message"] = "Warning : User has been deleted";
             return RedirectToAction("GetAll");
         }
+
+        public async Task<IActionResult> MakeAgent(string id, CancellationToken cancellationToken)
+        {
+            //TODO
+             //_userManagement.DeleteById(id);
+            return RedirectToAction("GetAll");
+        }
     }
 }

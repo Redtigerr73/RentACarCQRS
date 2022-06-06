@@ -22,6 +22,8 @@ namespace WebUI.MVC.Models
         [Required(ErrorMessage = "An email is required")]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
+
+        public string IdRole  { get; set; }
         
         
     }

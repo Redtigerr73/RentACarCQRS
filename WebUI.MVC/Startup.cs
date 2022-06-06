@@ -27,6 +27,7 @@ namespace WebUI.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddHttpClient<IBookingService, BookingServiceImp>();
             services.AddTransient<IBookingService, BookingServiceImp>();
             services.AddTransient<IUserManagement, UserManagementImp>();

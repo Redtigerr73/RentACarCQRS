@@ -13,5 +13,8 @@ namespace WebUI.MVC.Services.Interfaces
         Task DeleteById(string id, CancellationToken cancellationToken = default);
         Task<List<UserVm>> GetAllUsers(CancellationToken cancellationToken = default);
         Task<UserVm> GetUserById(string id, CancellationToken cancellationToken = default);
+        Task MakeAgent (string id, CancellationToken cancellationToken = default);
+
+        Task<List<UserRole>> GetUserRoles(string id, CancellationToken cancellationToken = default);
     }
 }
