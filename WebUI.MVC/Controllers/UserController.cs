@@ -31,6 +31,7 @@ namespace WebUI.MVC.Controllers
         public async Task<IActionResult> CreateUser(User user)
         {
             var authEntity = await _userManagement.CreateUser(user);
+            TempData["Message"] = "Success : User has been succesfully created";
             return RedirectToAction("GetAll");
         }
 
@@ -49,10 +50,9 @@ namespace WebUI.MVC.Controllers
             var user = await _userManagement.GetUserById(id);
             if(user == null)
             {
-                TempData["Message"] = "This user cannot be deleted";
+                TempData["Message"] = "Error : This user cannot be deleted";
                 return RedirectToAction("GetAll");
             }
-
             return View(user);
         }
 
@@ -60,8 +60,8 @@ namespace WebUI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
         {
-
             await _userManagement.DeleteById(id);
+            TempData["Message"] = "Warning : User has been deleted";
             return RedirectToAction("GetAll");
         }
 
