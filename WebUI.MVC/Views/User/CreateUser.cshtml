@@ -27,9 +27,27 @@
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div>
+                <label class"control-label">Do you want to assign roles to this user?</label>
+                <select id="roleChoice" class"control-label">                   
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div>
+                <label class="control-label">Which role do you want to assign ?</label>
+                <select id="roles">
+                </select>
+            </div>
+            <div class="form-group m-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <div class="form-group d-none" >
+                <label asp-for="IdRole" class="control-label"></label>
+                <input id="idRole" asp-for="IdRole" class="form-control" />
+                
+            </div>
+
         </form>
     </div>
 </div>
@@ -39,5 +57,33 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function() {
+            $("#roleChoice").change(function() {
+                var value = $(this).children(":selected").attr("value");
+                if (value == 1) {
+                    
+                    var items = "<option value=''>" + '---Select---' + "</option>";
+                    items += "<option value='rol_WS1ejGpXlu6PSAt4'>" + 'Owner' + "</option>";
+                    items += "<option value='rol_thcFsbP7DPyLFcT1'>" + 'Admin' + "</option>";
+                    $("#roles").append(items);
+                } else {
+                    $("#roles").empty()
+                    $("#idRole").val('');
+
+                }
+
+            });
+            $("#roles").change(function() {
+                var value = $(this).children(":selected").attr("value")
+                $("#idRole").val(value);
+                
+            });
+
+
+        })
+    </script>
 }

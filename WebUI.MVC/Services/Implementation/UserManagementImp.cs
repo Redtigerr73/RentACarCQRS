@@ -115,5 +115,31 @@ namespace WebUI.MVC.Services.Implementation
             var user = JsonConvert.DeserializeObject<UserVm>(content);
             return user;
         }
+
+        public async Task<List<UserRole>> GetUserRoles(string id, CancellationToken cancellationToken = default)
+        {
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:Audience"]+$"users/{id}/roles";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await _httpClient.GetAsync(endPoint, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Unable to retrieve User Roles");
+            }
+
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
+            var userRoles = JsonConvert.DeserializeObject<List<UserRole>>(content);
+            return userRoles;
+        }
+
+        public async Task MakeAgent(string id, CancellationToken cancellationToken)
+        {
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:Audience"] + "users/" + id + _configuration["UserManagementAPI:GetUserIdFields"];
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        }
     }
 }

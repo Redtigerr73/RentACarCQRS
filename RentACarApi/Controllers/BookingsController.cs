@@ -39,7 +39,7 @@ namespace RentACarApi.Controllers
         {
             var entity = await Mediator.Send(command);
             return entity;
-            return await Mediator.Send(command);
+            
         }
 
         [HttpPut("{id}")]
