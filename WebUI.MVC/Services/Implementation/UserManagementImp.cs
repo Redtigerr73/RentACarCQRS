@@ -40,6 +40,9 @@ namespace WebUI.MVC.Services.Implementation
             {
                 throw new Exception("Could not create user ");
             }
+            if(user.IdRole != "") {
+                await AssignRole(user.Email, user.IdRole);
+            }
 
             return authEntity;
         }
@@ -55,6 +58,23 @@ namespace WebUI.MVC.Services.Implementation
             if(!response.IsSuccessStatusCode)
             {
                 throw new Exception("Could not delete user ");
+            }
+        }
+
+        private async Task AssignRole(string userId, string roleId)
+        {
+            var token = await GetToken();
+            var accessToken = token.AccessToken;
+            var endPoint = _configuration["UserManagementAPI:Audience"] + $"users/auth0|{userId}/roles";
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var userRoles = new UserRoles();
+            userRoles.roles.Add(roleId);
+            var content = JsonConvert.SerializeObject(userRoles);
+            var response = await _httpClient.PostAsync(endPoint, new StringContent(content, Encoding.Default, "application/json"));
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Could not associate role to user");
             }
         }
 
