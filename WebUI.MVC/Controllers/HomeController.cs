@@ -45,10 +45,11 @@ namespace WebUI.MVC.Controllers
                 string idtoken = await HttpContext.GetTokenAsync("id_token");
                 idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
                 
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
             }
-            var userRoles = await _userManagement.GetUserRoles(idUser);
-            var str = userRoles[0].Name;
-            TempData["Role"] = str;
+            
 
             return View();
         }
