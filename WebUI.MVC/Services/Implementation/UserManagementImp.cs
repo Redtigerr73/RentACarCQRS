@@ -40,8 +40,11 @@ namespace WebUI.MVC.Services.Implementation
             {
                 throw new Exception("Could not create user ");
             }
-            if(user.IdRole != "") {
+            if(user.IdRole != "" || user.IdRole != null) {
                 await AssignRole(user.Email, user.IdRole);
+            }else
+            {
+                await AssignRole(user.Email, "");
             }
 
             return authEntity;
@@ -69,7 +72,11 @@ namespace WebUI.MVC.Services.Implementation
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var userRoles = new UserRoles();
-            userRoles.roles.Add(roleId);
+            if (roleId == null || roleId == "")
+                userRoles.roles.Add(_configuration["UserManagementAPI:defaultUserRole"]);
+            else
+                userRoles.roles.Add(roleId);
+
             var content = JsonConvert.SerializeObject(userRoles);
             var response = await _httpClient.PostAsync(endPoint, new StringContent(content, Encoding.Default, "application/json"));
             if(!response.IsSuccessStatusCode)
