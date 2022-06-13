@@ -145,7 +145,6 @@ namespace RentACarApi
                     }
                 });
                 }
-
                 app.UseHttpsRedirection();
 
                 app.UseRouting();

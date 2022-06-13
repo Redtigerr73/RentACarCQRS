@@ -161,5 +161,15 @@ namespace WebUI.MVC.Services.Implementation
             var endPoint = _configuration["UserManagementAPI:Audience"] + "users/" + id + _configuration["UserManagementAPI:GetUserIdFields"];
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
+
+        public async Task ResetPassword(string clientId, CancellationToken cancellationToken = default)
+        {
+            var endPoint = _configuration["UserManagementAPI:Audience"] + "/api/v2/tickets/password-change";
+            var response = await _httpClient.PostAsync(endPoint, new StringContent(clientId, Encoding.Default, "application/json"));
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Unable to execute password reset");
+            }
+        }
     }
 }

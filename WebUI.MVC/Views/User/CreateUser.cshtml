@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input id="email" asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,6 +60,8 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $("#roleChoice").change(function() {
@@ -87,6 +89,24 @@
             });
 
 
+        })
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#email").on("change",function(){
+                var value = $(this).val();
+                $.ajax({
+                    type:"get",
+                    url:"/User/UserExist",
+                    data : { email : value },
+                    success : function(data){
+                        if(data){
+                            toastr.error("A user is already registred with this Email", "Email Error");
+                            $("#email").val("");
+                        }
+                    }
+                })
+            })
         })
     </script>
 }

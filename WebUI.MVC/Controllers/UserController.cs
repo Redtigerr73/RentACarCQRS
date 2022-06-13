@@ -71,6 +71,13 @@ namespace WebUI.MVC.Controllers
             return View(users);
         }
 
+        [HttpGet]
+        public async Task<bool> UserExist(string email)
+        {
+            var users =  await _userManagement.GetAllUsers();
+            return users.Any(u => u.Email == email);
+        }
+
 
         public async Task<IActionResult> Delete(string id)
         {
