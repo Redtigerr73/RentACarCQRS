@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using WebUI.MVC.Services.Implementation;
@@ -117,6 +118,7 @@ namespace WebUI.MVC
             app.UseCookiePolicy();
 
             app.UseStaticFiles();
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

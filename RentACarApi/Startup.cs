@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RentACarApi.Filters;
 using RentACarApi.Handler;
+using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 using System.Reflection;
@@ -40,6 +41,8 @@ namespace RentACarApi
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddControllers(opt => opt.Filters.Add<ApiExceptionFilterAttribute>());
+
+
             var domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
@@ -118,7 +121,7 @@ namespace RentACarApi
                         new string[] { }
                     }
                 });
-                
+
 
 
                 services.AddMvc(options =>
@@ -129,35 +132,37 @@ namespace RentACarApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        {
+            if (env.IsDevelopment())
             {
-                if (env.IsDevelopment())
-                {
-                    app.UseDeveloperExceptionPage();
-                    app.UseSwagger();
-                    app.UseSwaggerUI(
-                options =>
-                {
-                // build a swagger endpoint for each discovered API version
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(
+            options =>
+            {
+                    // build a swagger endpoint for each discovered API version
                 foreach (var description in provider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-                    }
-                });
-                }
-                app.UseHttpsRedirection();
-
-                app.UseRouting();
-
-                app.UseAuthentication();
-
-                app.UseAuthorization();
-
-                app.UseEndpoints(endpoints =>
                 {
-                    endpoints.MapControllers();
-                });
+                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
+            });
             }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSerilogRequestLogging();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
 
         public class SwaggerDefaultValues : IOperationFilter
         {
