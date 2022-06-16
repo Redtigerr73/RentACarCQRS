@@ -25,14 +25,48 @@ namespace WebUI.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            
+            var idUser = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind
+                    );
+
+                string idtoken = await HttpContext.GetTokenAsync("id_token");
+                idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
+            }
 
 
             return View();
         }
 
-        public IActionResult CreateUser()
+        public async Task<IActionResult> CreateUser()
         {
+            var idUser = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind
+                    );
+
+                string idtoken = await HttpContext.GetTokenAsync("id_token");
+                idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
+            }
+
             return View();
         }
 
@@ -42,6 +76,24 @@ namespace WebUI.MVC.Controllers
         {
             var authEntity = await _userManagement.CreateUser(user);
             TempData["Message"] = "Success : User has been succesfully created";
+            var idUser = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind
+                    );
+
+                string idtoken = await HttpContext.GetTokenAsync("id_token");
+                idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
+            }
+
             return RedirectToAction("GetAll");
         }
 
@@ -74,6 +126,7 @@ namespace WebUI.MVC.Controllers
         [HttpGet]
         public async Task<bool> UserExist(string email)
         {
+
             var users =  await _userManagement.GetAllUsers();
             return users.Any(u => u.Email == email);
         }

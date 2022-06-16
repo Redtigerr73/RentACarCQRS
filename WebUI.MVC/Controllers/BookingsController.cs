@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebUI.MVC.Models;
 using WebUI.MVC.Services.Interfaces;
@@ -9,21 +14,43 @@ namespace WebUI.MVC.Controllers
     public class BookingsController : Controller
     {
         private readonly IBookingService _service;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public readonly IUserManagement _userManagement;
 
-        public BookingsController(IBookingService service)
+
+        public BookingsController(IBookingService service, IHttpContextAccessor httpContextAccessor, IUserManagement userManagement)
         {
             _service = service;
+            _httpContextAccessor = httpContextAccessor;
+            _userManagement = userManagement;
         }
         public IActionResult Index()
         {
             return View();
         }
 
-        
         public async Task<IActionResult> All()
         {
             var bookings = await _service.GetAllAsync(await HttpContext.GetTokenAsync("access_token"));
-            //TempData["Message"] = "Success : All bookings has been loaded";
+
+            var idUser = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind
+                    );
+
+                string idtoken = await HttpContext.GetTokenAsync("id_token");
+                idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
+            }
+
             return View(bookings);
         }
 
