@@ -48,6 +48,7 @@ namespace WebUI.MVC.Controllers
                 var userRoles = await _userManagement.GetUserRoles(idUser);
                 var str = userRoles[0].Name;
                 TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
             }
             
 
@@ -87,8 +88,26 @@ namespace WebUI.MVC.Controllers
         }
 
         [Authorize]
-        public IActionResult Claims()
+        public async Task<IActionResult> Claims()
         {
+            var idUser = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind
+                    );
+
+                string idtoken = await HttpContext.GetTokenAsync("id_token");
+                idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
+            }
             return View();
         }
 

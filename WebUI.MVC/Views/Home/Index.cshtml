@@ -1,4 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+ <style>
+     
+body{
+    @{
+        string url = " ";
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        url = "https://hiwayrentacar.com/wp-content/uploads/elementor/thumbs/shutterstock_1030912054-scaled-p3538272zdxyyq8nkg6l0y8vd0v6lnax2bln7398o8.jpg";
+    }
+  background-image: url('@url');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style> 
+     
