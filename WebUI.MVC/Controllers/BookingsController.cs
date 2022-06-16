@@ -49,6 +49,7 @@ namespace WebUI.MVC.Controllers
                 var userRoles = await _userManagement.GetUserRoles(idUser);
                 var str = userRoles[0].Name;
                 TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
             }
 
             return View(bookings);

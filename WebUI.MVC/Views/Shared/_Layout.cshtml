@@ -7,24 +7,44 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css">
 </head>
 
 <span id="Toastr" class="d-none">@TempData["Message"]</span>
 
 <body>
     <header>
-        @if (User.Identity.IsAuthenticated)
-        {
-            @*<a class= loggedin/> CHANGER BG OU COULEUR NAV BAR*@
+        @{
+            string style = "";
+            string role = (string)@TempData["Role"];
+            switch (role)
+            {
+                case "User":
+                case "Agent":
+                    style = "background-color:#3bbfff";
+                    break;
+                case "Admin":
+                case "Owner":
+                    style = "background-color:#3bff7b";
+                    break;
+                default:
+                    style = "background-color:#ff7d3b";
+                    break;
+            }
         }
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ff7b3b;>
+
+        <nav class="navbar navbar-expand-lg navbar-light" style="@style">
             <a class="navbar-brand" href="#">
                 <img src="https://courmelles-handball.com/wp-content/uploads/2.png" alt="..." height="56">
             </a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="navbar nav-link"><i class="fa-solid fa-user m-2"></i>Welcome @TempData["UserName"] | You're logged as <strong> : @TempData["Role"]</strong></a>
+            }
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto topnav">
                     <li class="nav-item active">
@@ -47,16 +67,15 @@
 
                             </div>
                         </li>
-                        
-                        @*@if (!(((string)@TempData["Role"] == "User") || ((string)@TempData["Role"] == null)))*@
-                        @if (!((string)@TempData["Role"] == "User"))
+
+                                    @if (!(((string)@TempData["Role"] == "User") || ((string)@TempData["Role"] == "Agent")))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     User Management
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @if ((((string)@TempData["Role"] == "Owner") || ((string)@TempData["Role"] == "Admin")))
+                                    @if (((string)@TempData["Role"] == "Owner"))
                                     {
                                         <a class="dropdown-item" asp-controller="User" asp-action="CreateUser">Create User</a>
                                     }
@@ -73,7 +92,9 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href='@Url.Action("Logout", "Home")'">LogOut</button>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link btn btn-primary me-3" onclick="location.href='@Url.Action("Logout", "Home")'">LogOut</button>
+                        </li>
                     }
                     else
                     {
@@ -139,7 +160,7 @@
 
     <footer class="footer">
         <div class="container text-center">
-            <span class="text-muted">© 2022 EPHEC - HAJI Mohamad - MONTILLA Francisco</span>
+            <span class="text"><strong>© 2022 EPHEC - HAJI Mohamad - MONTILLA Francisco</strong></span>
         </div>
     </footer>
     <script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>

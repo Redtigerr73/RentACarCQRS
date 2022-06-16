@@ -7,15 +7,18 @@
 <h1>Bookings</h1>
 
 <!--CSS START-->
-<link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" asp-append-version="true"/>
+<link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" asp-append-version="true" />
 <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 <!--CSS END-->
+@if (!(((string)@TempData["Role"] == "User")))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+}
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
-</p>
-<table id = "datatables" class="table">
+<table id="datatables" class="table">
     <thead>
         <tr>
             <th>
@@ -37,30 +40,41 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in @Model.BookingList) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PickUpLocationId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DropOffLocationId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-}
+        @foreach (var item in @Model.BookingList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FromDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PickUpLocationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DropOffLocationId)
+                </td>
+                <td>
+                    @if (!(((string)@TempData["Role"] == "User")))
+                    {
+                    @Html.ActionLink("Edit", "Update", new { id=item.Id }) 
+                    } |
+                    @if (!(((string)@TempData["Role"] == "User")))
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    } |
+                    @if (!(((string)@TempData["Role"] == "User")))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

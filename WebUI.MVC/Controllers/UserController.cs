@@ -41,6 +41,7 @@ namespace WebUI.MVC.Controllers
                 var userRoles = await _userManagement.GetUserRoles(idUser);
                 var str = userRoles[0].Name;
                 TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
             }
 
 
@@ -65,6 +66,7 @@ namespace WebUI.MVC.Controllers
                 var userRoles = await _userManagement.GetUserRoles(idUser);
                 var str = userRoles[0].Name;
                 TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
             }
 
             return View();
@@ -92,6 +94,7 @@ namespace WebUI.MVC.Controllers
                 var userRoles = await _userManagement.GetUserRoles(idUser);
                 var str = userRoles[0].Name;
                 TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
             }
 
             return RedirectToAction("GetAll");
@@ -118,6 +121,7 @@ namespace WebUI.MVC.Controllers
                 var userRoles = await _userManagement.GetUserRoles(idUser);
                 var str = userRoles[0].Name;
                 TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
             }
             var users = await _userManagement.GetAllUsers();
             return View(users);
