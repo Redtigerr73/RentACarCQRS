@@ -148,6 +148,7 @@ namespace RentACarApi
                 }
             });
             }
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSerilogRequestLogging();

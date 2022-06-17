@@ -56,8 +56,26 @@ namespace WebUI.MVC.Controllers
         }
 
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var idUser = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                DateTime accessTokenExpiresAt = DateTime.Parse(
+                    await HttpContext.GetTokenAsync("expires_at"),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind
+                    );
+
+                string idtoken = await HttpContext.GetTokenAsync("id_token");
+                idUser = _httpContextAccessor.HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+
+                var userRoles = await _userManagement.GetUserRoles(idUser);
+                var str = userRoles[0].Name;
+                TempData["Role"] = str;
+                TempData["UserName"] = _httpContextAccessor.HttpContext.User.Claims.ElementAt(0).Value;
+            }
             return View();
         }
 
@@ -65,6 +83,7 @@ namespace WebUI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Booking booking)
         {
+
             await _service.CreateAsync(booking, await HttpContext.GetTokenAsync("access_token"));
             TempData["Message"] = "Success : Booking has been created";
             return RedirectToAction("All");
