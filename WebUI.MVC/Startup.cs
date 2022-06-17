@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Serilog;
 using System;
 using System.Threading.Tasks;
+using WebUI.MVC.Middleware;
 using WebUI.MVC.Services.Implementation;
 using WebUI.MVC.Services.Interfaces;
 
@@ -104,6 +105,7 @@ namespace WebUI.MVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMyMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -114,9 +116,10 @@ namespace WebUI.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+           
             app.UseHttpsRedirection();
             app.UseCookiePolicy();
-
+            
             app.UseStaticFiles();
             app.UseSerilogRequestLogging();
 
